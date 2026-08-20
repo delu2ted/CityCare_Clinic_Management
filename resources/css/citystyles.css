@@ -1,0 +1,63 @@
+:root {
+    --color-cool-grey-light: #f8f9fa;
+    --color-cool-grey: #e9ecef;
+    --color-cool-grey-medium: #dee2e6;
+    --color-cool-grey-dark: #495057;
+    --color-lilac: #d8b4e2;
+    --color-lilac-dark: #b08dc0;
+}
+
+body {
+    background-color: var(--color-cool-grey-light);
+    color: var(--color-cool-grey-dark);
+}
+
+.navbar {
+    background-color: #ffffff !important;
+    border-bottom: 4px solid var(--color-lilac);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    color: var(--color-cool-grey-dark) !important;
+}
+
+a {
+    color: var(--color-lilac-dark);
+    text-decoration: none;
+}
+a:hover {
+    color: var(--color-lilac);
+    text-decoration: underline;
+}
+
+.btn-primary {
+    background-color: var(--color-lilac);
+    border-color: var(--color-lilac);
+    color: #fff;
+}
+.btn-primary:hover {
+    background-color: var(--color-lilac-dark);
+    border-color: var(--color-lilac-dark);
+}
+
+.card {
+    border: 1px solid var(--color-cool-grey);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.card-header {
+    background-color: var(--color-cool-grey-light);
+    border-bottom: 2px solid var(--color-lilac);
+    font-weight: bold;
+}
+
+.form-control:focus {
+    border-color: var(--color-lilac);
+    box-shadow: 0 0 0 0.25rem rgba(216, 180, 226, 0.25);
+}
+
+.table thead th {
+    background-color: var(--color-cool-grey);
+    color: var(--color-cool-grey-dark);
+    border-bottom: 2px solid var(--color-lilac);
+}
