@@ -8,6 +8,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ReportController;
 
 
 // Home page
@@ -77,4 +78,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/api/doctors/{doctor}/available-slots', [DoctorController::class, 'availableSlots'])->name('doctors.available-slots');
     Route::get('/api/patients/search', [PatientController::class, 'search'])->name('patients.search');
 
+
+    //report routes
+    Route::middleware('role:admin,cashier,receptionist,doctor')->group(function () {
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/reports/appointments', [ReportController::class, 'appointments'])->name('reports.appointments');
+    Route::get('/reports/doctor-schedule', [ReportController::class, 'doctorSchedule'])->name('reports.doctor-schedule');
+    Route::get('/reports/payments', [ReportController::class, 'payments'])->name('reports.payments');
+    Route::get('/reports/patient-visits', [ReportController::class, 'patientVisits'])->name('reports.patient-visits');
+        });
+
+    
 });

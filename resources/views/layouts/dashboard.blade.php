@@ -33,6 +33,11 @@
                 <a href="{{ route('payments.index') }}" class="dash-link {{ request()->routeIs('payments.*') ? 'active' : '' }}">💳 Payments</a>
             @endif
 
+            @if(in_array(Auth::user()->role, ['admin', 'cashier', 'receptionist', 'doctor']))
+                <div class="nav-section-label">Reports</div>
+                <a href="{{ route('reports.index') }}" class="dash-link {{ request()->routeIs('reports.*') ? 'active' : '' }}">📊 Reports</a>
+            @endif
+
             @if(Auth::user()->role === 'admin')
                 <div class="nav-section-label">Admin</div>
                 <a href="{{ route('departments.index') }}" class="dash-link {{ request()->routeIs('departments.*') ? 'active' : '' }}">🏢 Departments</a>
