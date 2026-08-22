@@ -16,7 +16,7 @@
         </div>
         <div class="col-md-4">
             <div class="stat-card tone-4">
-                <div><div class="stat-label">Balance Due</div><div class="stat-value">${{ number_format($balanceDue, 2) }}</div></div>
+                <div><div class="stat-label">Balance Due</div><div class="stat-value">${{ number_format($balanceDue, UGX {{ number_format($income, 0) }}) }}</div></div>
                 <div class="stat-icon">💳</div>
             </div>
         </div>
@@ -28,22 +28,33 @@
     </div>
 
     <div class="dash-panel">
-        <h6 class="mb-3">Upcoming Appointments</h6>
-        @if($upcoming->count())
-            <table class="table">
-                <thead><tr><th>Doctor</th><th>Date &amp; Time</th><th>Status</th></tr></thead>
-                <tbody>
-                    @foreach($upcoming as $appt)
-                        <tr>
-                            <td>{{ $appt->doctor->user->name ?? 'N/A' }}</td>
-                            <td>{{ $appt->appointment_time->format('d M Y, H:i') }}</td>
-                            <td><span class="badge bg-secondary">{{ ucfirst($appt->status) }}</span></td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @else
-            <p class="text-muted mb-0">No upcoming appointments. <a href="{{ route('appointments.create') }}">Book one now.</a></p>
-        @endif
-    </div>
+    <h6 class="mb-3">Upcoming Appointments</h6>
+    @if($upcoming->count())
+        <table class="table">
+            <thead><tr><th>Doctor</th><th>Date &amp; Time</th><th>Status</th><th>Payment</th></tr></thead>
+            <tbody>
+                @foreach($upcoming as $appt)
+                    <tr>
+                        <td>{{ $appt->doctor->user->name ?? 'N/A' }}</td>
+                        <td>{{ $appt->appointment_time->format('d M Y, H:i') }}</td>
+                        <td><span class="badge bg-secondary">{{ ucfirst($appt->status) }}</span></td>
+                        <td>
+                            @if($appt->payment)
+                                ${{ number_format($appt->payment->amount, 2) }} —
+                                <span class="badge {{ $appt->payment->status === 'paid' ? 'bg-success' : 'bg-warning text-dark' }}">
+                                    {{ ucfirst(str_replace('_',' ',$appt->payment->status)) }}
+                                </span>
+                            @else
+                                <span class="text-muted">Not recorded</span>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <p class="text-muted mb-0">No upcoming appointments. <a href="{{ route('appointments.create') }}">Book one now.</a></p>
+    @endif
+</div>
+
 </x-dashboard-layout>

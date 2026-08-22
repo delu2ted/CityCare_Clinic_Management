@@ -38,6 +38,7 @@
                 <a href="{{ route('departments.index') }}" class="dash-link {{ request()->routeIs('departments.*') ? 'active' : '' }}">🏢 Departments</a>
             @endif
 
+
             <div class="nav-section-label">Account</div>
             <a href="{{ route('profile.edit') }}" class="dash-link">👤 Profile ({{ Auth::user()->name }})</a>
             <form method="POST" action="{{ route('logout') }}">

@@ -11,7 +11,7 @@
             <tr><th>Notes</th><td>{{ $appointment->notes ?? '—' }}</td></tr>
             <tr><th>Payment</th><td>
                 @if($appointment->payment)
-                    ${{ number_format($appointment->payment->amount, 2) }} — {{ ucfirst($appointment->payment->status) }}
+                    UGX {{ number_format($appointment->payment->amount, UGX {{ number_format($income, 0) }}) }} — {{ ucfirst($appointment->payment->status) }}
                 @else
                     <a href="{{ route('payments.create') }}?appointment_id={{ $appointment->id }}">Record payment</a>
                 @endif

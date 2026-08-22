@@ -41,7 +41,7 @@
                 <tbody>
                     @foreach($payments as $pay)
                         <tr>
-                            <td>${{ number_format($pay->amount, 2) }}</td>
+                            <td>${{ number_format($pay->amount, UGX {{ number_format($income, 0) }}) }}</td>
                             <td>{{ $pay->payment_method ?? '—' }}</td>
                             <td><span class="badge bg-secondary">{{ ucfirst(str_replace('_',' ',$pay->status)) }}</span></td>
                             <td>{{ $pay->created_at->format('d M Y') }}</td>

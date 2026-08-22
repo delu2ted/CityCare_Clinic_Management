@@ -7,8 +7,8 @@
 
             <div class="row g-3">
                 <div class="col-md-4">
-                    <label class="form-label">Amount ($)</label>
-                    <input type="number" step="0.01" name="amount" class="form-control" value="{{ $payment->amount }}" required>
+                    <label class="form-label">Amount (UGX)</label>
+                    <input type="number" step="1000" min="50000" name="amount" class="form-control" value="{{ $payment->amount }}" required>
                 </div>
 
                 <div class="col-md-4">

@@ -6,6 +6,7 @@ use App\Models\Appointment;
 use App\Models\Patient;
 use App\Models\Doctor;
 use App\Models\Department;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -34,7 +35,7 @@ class AppointmentController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->whereHas('patient.user', fn ($u) => $u->where('name', 'like', "%{$search}%"))
-                  ->orWhereHas('doctor.user', fn ($u) => $u->where('name', 'like', "%{$search}%"));
+                ->orWhereHas('doctor.user', fn ($u) => $u->where('name', 'like', "%{$search}%"));
             });
         }
 
@@ -56,36 +57,100 @@ class AppointmentController extends Controller
     {
         $validated = $request->validate([
             'patient_id' => 'required|exists:patients,id',
-            'doctor_id' => 'required|exists:doctors,id',
-            'department_id' => 'nullable|exists:departments,id',
+            'department_id' => 'required|exists:departments,id',
+            'doctor_id' => 'nullable|exists:doctors,id',
             'appointment_date' => 'required|date|after_or_equal:today',
             'appointment_time' => 'required',
             'notes' => 'nullable|string',
+            'amount' => 'required|numeric|min:50,000',
+            'payment_method' => 'required|string',
         ]);
 
         $dateTime = Carbon::parse($validated['appointment_date'] . ' ' . $validated['appointment_time']);
+        $bufferMinutes = 5;
 
-        $clash = Appointment::where('doctor_id', $validated['doctor_id'])
-            ->where('appointment_time', $dateTime)
-            ->where('status', '!=', 'cancelled')
-            ->exists();
+        $doctorId = $validated['doctor_id'] ?? null;
 
-        if ($clash) {
-            return back()->withInput()->withErrors([
-                'appointment_time' => 'This doctor already has an appointment at that time. Please choose another slot.',
-            ]);
+        if (!$doctorId) {
+            $doctor = $this->findBestDoctor($validated['department_id'], $dateTime, $bufferMinutes);
+
+            if (!$doctor) {
+                return back()->withInput()->withErrors([
+                    'appointment_time' => 'No doctors are available in this department at that time. Please try a different time or select a specific doctor.',
+                ]);
+            }
+
+            $doctorId = $doctor->id;
+        } else {
+            $windowStart = (clone $dateTime)->subMinutes($bufferMinutes);
+            $windowEnd = (clone $dateTime)->addMinutes($bufferMinutes);
+
+            $clash = Appointment::where('doctor_id', $doctorId)
+                ->where('status', '!=', 'cancelled')
+                ->whereBetween('appointment_time', [$windowStart, $windowEnd])
+                ->exists();
+
+            if ($clash) {
+                return back()->withInput()->withErrors([
+                    'appointment_time' => 'This doctor already has an appointment too close to that time (a ' . $bufferMinutes . '-minute buffer is required between appointments). Please choose another slot.',
+                ]);
+            }
         }
 
-        Appointment::create([
+        $appointment = Appointment::create([
             'patient_id' => $validated['patient_id'],
-            'doctor_id' => $validated['doctor_id'],
-            'department_id' => $validated['department_id'] ?? null,
+            'doctor_id' => $doctorId,
+            'department_id' => $validated['department_id'],
             'appointment_time' => $dateTime,
             'status' => 'scheduled',
             'notes' => $validated['notes'] ?? null,
         ]);
 
-        return redirect()->route('appointments.index')->with('success', 'Appointment booked successfully.');
+        Payment::create([
+            'appointment_id' => $appointment->id,
+            'patient_id' => $validated['patient_id'],
+            'amount' => $validated['amount'],
+            'payment_method' => $validated['payment_method'],
+            'status' => 'pending',
+        ]);
+
+        return redirect()->route('appointments.show', $appointment)
+            ->with('success', 'Appointment booked successfully! Your assigned doctor is ' . ($appointment->doctor->user->name ?? 'to be confirmed') . '. Payment status: pending.');
+    }
+
+    //Helper method to auto-pick the best doctor
+    private function findBestDoctor($departmentId, $dateTime, $bufferMinutes = 5)
+    {
+        $doctors = Doctor::where('department_id', $departmentId)->get();
+
+        $windowStart = (clone $dateTime)->subMinutes($bufferMinutes);
+        $windowEnd = (clone $dateTime)->addMinutes($bufferMinutes);
+
+        $eligible = [];
+
+        foreach ($doctors as $doctor) {
+            $clash = Appointment::where('doctor_id', $doctor->id)
+                ->where('status', '!=', 'cancelled')
+                ->whereBetween('appointment_time', [$windowStart, $windowEnd])
+                ->exists();
+
+            if (!$clash) {
+                $todayCount = Appointment::where('doctor_id', $doctor->id)
+                    ->whereDate('appointment_time', $dateTime->toDateString())
+                    ->where('status', '!=', 'cancelled')
+                    ->count();
+
+                $eligible[] = ['doctor' => $doctor, 'count' => $todayCount];
+            }
+        }
+
+        if (empty($eligible)) {
+            return null;
+        }
+
+        usort($eligible, fn ($a, $b) => $a['count'] <=> $b['count']);
+
+        return $eligible[0]['doctor'];
     }
 
     public function show(Appointment $appointment)

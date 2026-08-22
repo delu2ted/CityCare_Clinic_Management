@@ -51,7 +51,7 @@ class DashboardController extends Controller
     protected function patient()
     {
         $patient = Auth::user()->patient;
-        $upcoming = $patient ? Appointment::where('patient_id', $patient->id)->where('appointment_time', '>=', now())->orderBy('appointment_time')->limit(5)->get() : collect();
+        $upcoming = $patient ? Appointment::with(['doctor.user', 'payment'])->where('patient_id', $patient->id)->where('appointment_time', '>=', now())->orderBy('appointment_time')->limit(5)->get() : collect();
         $visitHistoryCount = $patient ? Appointment::where('patient_id', $patient->id)->where('status', 'completed')->count() : 0;
         $balanceDue = $patient ? Payment::where('patient_id', $patient->id)->where('status', 'pending')->sum('amount') : 0;
 

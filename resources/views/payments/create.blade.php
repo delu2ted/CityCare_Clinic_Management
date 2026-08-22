@@ -21,8 +21,8 @@
                 </div>
 
                 <div class="col-md-4">
-                    <label class="form-label">Amount ($)</label>
-                    <input type="number" step="0.01" name="amount" class="form-control @error('amount') is-invalid @enderror" value="{{ old('amount') }}" required>
+                    <label class="form-label">Amount (UGX)</label>
+                    <input type="number" step="1000" min="50000" name="amount" class="form-control @error('amount') is-invalid @enderror" value="{{ old('amount') }}" required>
                     @error('amount')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
 

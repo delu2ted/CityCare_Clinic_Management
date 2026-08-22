@@ -65,3 +65,51 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+//Filter the doctor dropdown by selected department
+document.addEventListener('DOMContentLoaded', () => {
+    const departmentSelect = document.getElementById('department_id');
+    const doctorSelect = document.getElementById('doctor_id');
+
+    function filterDoctorsByDepartment() {
+        if (!departmentSelect || !doctorSelect) return;
+        const allDoctors = JSON.parse(doctorSelect.dataset.allDoctors || '[]');
+        const deptId = departmentSelect.value;
+
+        const filtered = allDoctors.filter(d => String(d.department_id) === String(deptId));
+
+        doctorSelect.innerHTML = '<option value="">Any available doctor in this department</option>' +
+            filtered.map(d => `<option value="${d.id}">${d.user?.name ?? 'Doctor'} (${d.specialization})</option>`).join('');
+    }
+
+    departmentSelect?.addEventListener('change', filterDoctorsByDepartment);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const methodSelect = document.getElementById('payment_method');
+    const groups = {
+        'Mobile Money': document.getElementById('mobile_money_fields'),
+        'Card': document.getElementById('card_fields'),
+        'Insurance': document.getElementById('insurance_fields'),
+    };
+
+    function toggleFields() {
+        if (!methodSelect) return;
+        Object.values(groups).forEach(el => el && (el.style.display = 'none'));
+        const selected = groups[methodSelect.value];
+        if (selected) selected.style.display = 'block';
+    }
+
+    methodSelect?.addEventListener('change', toggleFields);
+    toggleFields();
+});
+
+//Auto-dismiss success alert after 3sec
+document.addEventListener('DOMContentLoaded', () => {
+    const successAlert = document.querySelector('.alert-success');
+    if (successAlert && window.bootstrap) {
+        setTimeout(() => {
+            const alertInstance = window.bootstrap.Alert.getOrCreateInstance(successAlert);
+            alertInstance.close();
+        }, 3000);
+    }
+});

@@ -1,7 +1,9 @@
 <x-dashboard-layout>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 class="h4 mb-0">Doctors</h2>
-        <a href="{{ route('doctors.create') }}" class="btn btn-primary">Add Doctor</a>
+        @if(auth()->user()->role === 'admin')
+            <a href="{{ route('doctors.create') }}" class="btn btn-primary">Add Doctor</a>
+        @endif
     </div>
 
     <div class="dash-panel mb-3">
@@ -38,11 +40,14 @@
                             <td>{{ $doc->phone ?? '—' }}</td>
                             <td>
                                 <a href="{{ route('doctors.show', $doc) }}" class="btn btn-sm btn-outline-secondary">View</a>
-                                <a href="{{ route('doctors.edit', $doc) }}" class="btn btn-sm btn-outline-primary">Edit</a>
-                                <form action="{{ route('doctors.destroy', $doc) }}" method="POST" class="d-inline">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Remove this doctor? This also deletes their login account.')">Delete</button>
-                                </form>
+                                
+                                @if(auth()->user()->role === 'admin')
+                                    <a href="{{ route('doctors.edit', $doc) }}" class="btn btn-sm btn-outline-primary">Edit</a>
+                                    <form action="{{ route('doctors.destroy', $doc) }}" method="POST" class="d-inline">
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Remove this doctor? This also deletes their login account.')">Delete</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
