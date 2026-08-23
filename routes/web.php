@@ -58,6 +58,8 @@ Route::middleware(['auth'])->group(function () {
     // Appointments — admin, receptionist, doctor, patient all interact with these
     Route::middleware('role:admin,receptionist,doctor,patient')->group(function () {
         Route::resource('appointments', AppointmentController::class);
+        Route::get('/appointments/{appointment}/consultation', [AppointmentController::class, 'editConsultation'])->name('appointments.consultation.edit');
+        Route::put('/appointments/{appointment}/consultation', [AppointmentController::class, 'updateConsultation'])->name('appointments.consultation.update');
     });
 
     // Payments — admin and cashier manage; patient can view their own
