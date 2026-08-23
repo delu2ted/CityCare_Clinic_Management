@@ -36,7 +36,7 @@
                         <tr>
                             <td>{{ $pay->patient->user->name ?? 'N/A' }}</td>
                             <td>{{ $pay->appointment?->appointment_time?->format('d M Y') ?? '—' }}</td>
-                            <td>{{ number_format($pay->amount) }} UGX {{ number_format($income, 0) }}</td>
+                            <td>UGX {{ number_format($pay->amount, 0) }}</td>
                             <td>{{ $pay->payment_method ?? '—' }}</td>
                             <td>
                                 <span class="badge bg-secondary">{{ ucfirst(str_replace('_',' ',$pay->status)) }}</span>
