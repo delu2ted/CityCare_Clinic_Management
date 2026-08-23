@@ -17,7 +17,7 @@
         <h6 class="mb-3">Visit History</h6>
         @if($visitHistory->count())
             <table class="table">
-                <thead><tr><th>Doctor</th><th>Date &amp; Time</th><th>Status</th></tr></thead>
+                <thead><tr><th>Doctor</th><th>Date &amp; Time</th><th>Status</th><th>Diagnosis</th></tr></thead>
                 <tbody>
                     @foreach($visitHistory as $appt)
                         <tr>
