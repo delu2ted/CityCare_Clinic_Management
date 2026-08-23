@@ -16,7 +16,7 @@
         </div>
         <div class="col-md-4">
             <div class="stat-card tone-4">
-                <div><div class="stat-label">Balance Due</div><div class="stat-value">${{ number_format($balanceDue, UGX {{ number_format($income, 0) }}) }}</div></div>
+                <div><div class="stat-label">Balance Due</div><div class="stat-value">UGX {{ number_format($balanceDue, 0) }}</div></div>
                 <div class="stat-icon">💳</div>
             </div>
         </div>
