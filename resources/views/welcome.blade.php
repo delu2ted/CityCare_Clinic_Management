@@ -43,7 +43,7 @@
                 <div class="col-md-6">
                     <h2 class="section-title mb-3">Our Mission</h2>
                     <p class="text-muted">
-                        To provide accessible, high-quality healthcare to every patient who walks through our doors — combining modern medical practice with genuine, personal attention. We believe good healthcare starts with being seen, heard, and cared for.
+                        To provide accessible, high-quality healthcare to every patient who walks through our doors, combining modern medical practice with genuine, personal attention. We believe good healthcare starts with being seen, heard, and cared for.
                     </p>
                 </div>
                 <div class="col-md-6">
@@ -52,7 +52,7 @@
                         <li>Experienced doctors across multiple specializations</li>
                         <li>Simple online appointment booking</li>
                         <li>Transparent billing and payment tracking</li>
-                        <li>Digital medical records — no more lost paper files</li>
+                        <li>Digital medical records, no more lost paper files</li>
                     </ul>
                 </div>
             </div>
