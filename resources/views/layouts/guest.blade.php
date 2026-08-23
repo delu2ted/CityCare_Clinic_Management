@@ -18,10 +18,10 @@
         <div class="text-center mb-3">
             <a href="{{ url('/') }}" class="text-decoration-none d-inline-flex align-items-center gap-2">
                 <img src="{{ asset('images/logo.png') }}" alt="CityCare Logo" style="height:40px;" onerror="this.style.display='none'">
-                <span class="fw-bold fs-4 text-white">CityCare Clinic</span>
+                <span class="fw-bold fs-4 text-white">CityCare Medical Centre</span>
             </a>
         </div>
-        <div class="card shadow" style="border-top: 4px solid #d8b4e2;">
+        <div class="card shadow" style="border-top: 4px solid #e27bfe;">
             <div class="card-body p-4">
                 {{ $slot }}
             </div>
