@@ -124,7 +124,7 @@
                 @forelse($doctors ?? [] as $doc)
                     <div class="col-md-4">
                         <div class="doctor-card text-center">
-                            <div class="mb-2" style="font-size:2rem;">🩺</div>
+                            <img src="{{ asset('images/doctor-placeholder.png') }}" alt="Doctor" class="rounded-circle mb-2" style="width:64px;height:64px;object-fit:cover;" onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($doc->user->name ?? 'Doctor') }}&background=d8b4e2&color=513c73&size=128'">
                             <h6 class="mb-1">{{ $doc->user->name ?? 'Doctor' }}</h6>
                             <p class="text-muted small mb-0">{{ $doc->specialization }}</p>
                         </div>
