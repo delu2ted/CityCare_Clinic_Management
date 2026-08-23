@@ -20,8 +20,8 @@ class ContactController extends Controller
                 "From: {$validated['name']} ({$validated['email']})\n\n{$validated['message']}",
                 function ($mail) use ($validated) {
                     $mail->to('info@citycareclinic.test')
-                         ->subject('New Contact Form Inquiry')
-                         ->replyTo($validated['email'], $validated['name']);
+                        ->subject('New Contact Form Inquiry')
+                        ->replyTo($validated['email'], $validated['name']);
                 }
             );
         } catch (\Exception $e) {
