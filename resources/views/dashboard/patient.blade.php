@@ -40,7 +40,7 @@
                         <td><span class="badge bg-secondary">{{ ucfirst($appt->status) }}</span></td>
                         <td>
                             @if($appt->payment)
-                                ${{ number_format($appt->payment->amount, 2) }} —
+                                UGX{{ number_format($appt->payment->amount, 2) }} —
                                 <span class="badge {{ $appt->payment->status === 'paid' ? 'bg-success' : 'bg-warning text-dark' }}">
                                     {{ ucfirst(str_replace('_',' ',$appt->payment->status)) }}
                                 </span>
