@@ -162,3 +162,31 @@ See `database/migrations/` for full schema definitions.
 ---
 
 ## Project Structure Highlights
+app/
+Http/Controllers/ # RESTful controllers (one per entity + Dashboard, Report, Contact)
+Http/Middleware/ # EnsureUserHasRole (custom role-based access)
+Models/ # Eloquent models with relationships
+Exports/ # Excel/CSV export classes (maatwebsite/excel)
+resources/
+views/
+layouts/ # dashboard.blade.php, guest.blade.php (shared layouts)
+components/ # alert.blade.php, confirm-delete-modal.blade.php
+reports/ # on-screen + PDF report templates
+[module]/ # index/create/edit/show per entity
+css/citystyles.css # custom theme (cool grey + lilac)
+js/app.js # AJAX logic (slot loading, instant search)
+routes/web.php # grouped by role-based middleware
+
+---
+
+## Known Limitations / Notes for Reviewers
+
+- Payment methods beyond "Cash" (Mobile Money, Card, Insurance) collect placeholder fields on the booking form for UI completeness but do not process real transactions — out of scope for this exam project.
+- The public contact form logs submissions (`storage/logs/laravel.log`) rather than sending real email, since no SMTP provider is configured in this environment.
+- No-show status is set manually by Receptionist/Admin after a missed appointment time, rather than automated — this preserves human judgment over whether a patient genuinely didn't attend.
+
+---
+
+## Screenshots
+
+_(Add screenshots here before submission: public homepage, admin dashboard, appointment booking form, a sample PDF report, and the role-based 403 page.)_
