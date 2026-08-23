@@ -43,10 +43,14 @@
                                 
                                 @if(auth()->user()->role === 'admin')
                                     <a href="{{ route('doctors.edit', $doc) }}" class="btn btn-sm btn-outline-primary">Edit</a>
-                                    <form action="{{ route('doctors.destroy', $doc) }}" method="POST" class="d-inline">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Remove this doctor? This also deletes their login account.')">Delete</button>
-                                    </form>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteDoctor{{ $doc->id }}">Delete</button>
+
+                                    <x-confirm-delete-modal
+                                        :id="'deleteDoctor' . $doc->id"
+                                        :action="route('doctors.destroy', $doc)"
+                                        title="Remove Doctor?"
+                                        :message="'Remove Dr. ' . ($doc->user->name ?? 'this doctor') . '? This also deletes their login account. This cannot be undone.'"
+                                    />
                                 @endif
                             </td>
                         </tr>
