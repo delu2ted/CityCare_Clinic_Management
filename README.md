@@ -1,52 +1,54 @@
-# CityCare Medical Centre — Clinic Appointment & Patient Management System
+# CityCare Medical Centre
 
-A centralized, role-based web application built with **Laravel 12** and **Bootstrap 5**, designed to replace CityCare Medical Centre's manual appointment books, spreadsheets, and WhatsApp-based coordination with a single reliable digital platform.
+A clinic appointment and patient management system built with **Laravel 12** and **Bootstrap 5**. It replaces manual booking (notebooks, spreadsheets, WhatsApp) with one centralized, role-based web app.
+
+---
+
+## What This App Does
+
+- Patients book appointments online — no doctor required, the system can auto-assign one
+- Receptionists manage bookings without double-booking doctors
+- Doctors see their schedule and patient history
+- Cashiers track payments
+- Admins oversee everything and pull reports
 
 ---
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Backend | Laravel 12 (PHP 8.2+) |
-| Frontend | Bootstrap 5, Blade Templating |
-| Database | MySQL |
-| Authentication | Laravel Breeze (customized, role-aware) |
-| PDF Export | barryvdh/laravel-dompdf |
-| Excel/CSV Export | maatwebsite/excel |
-| Styling | Custom "Cool Grey & Lilac" theme (`resources/css/citystyles.css`) |
+- **Backend:** Laravel 12, PHP 8.2+
+- **Frontend:** Bootstrap 5, Blade
+- **Database:** MySQL
+- **Auth:** Laravel Breeze (customized)
+- **Exports:** DomPDF (PDF), Maatwebsite Excel (Excel/CSV)
 
 ---
 
-## Setup Instructions
+## Getting Started
 
-### 1. Clone the repository
+### 1. Clone and enter the project
 ```bash
 git clone https://github.com/delu2ted/CityCare_Clinic_Management.git
 cd CityCare_Clinic_Management
 ```
 
-### 2. Install PHP dependencies
+### 2. Install dependencies
 ```bash
 composer install
-```
-
-> **Note:** `maatwebsite/excel` requires the PHP `zip` and `gd` extensions. If installation fails, enable both in your `php.ini` (uncomment `extension=zip` and `extension=gd`) and restart your server.
-
-### 3. Install JavaScript dependencies
-```bash
 npm install
 ```
 
-### 4. Configure environment
+> If `composer install` fails on `maatwebsite/excel`, your PHP is missing the `zip` or `gd` extension. Open `php.ini`, uncomment `extension=zip` and `extension=gd`, then restart your server and try again.
+
+### 3. Set up your environment file
 ```bash
 copy .env.example .env
 php artisan key:generate
 ```
 
-Edit `.env` and set your database and app URL:
-APP_URL=http://127.0.0.1:8000
+Open `.env` and set:
 
+APP_URL=http://127.0.0.1:8000
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
