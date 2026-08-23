@@ -13,7 +13,7 @@
 <body>
     <div class="dash-wrapper">
         <aside class="dash-sidebar">
-            <div class="brand">CityCare Clinic</div>
+            <div class="brand">CityCare Medical Centre</div>
 
             <div class="nav-section-label">Main</div>
             <a href="{{ route('dashboard') }}" class="dash-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">📊 Dashboard</a>
