@@ -22,7 +22,7 @@
         </div>
         <div class="col-md-3">
             <div class="stat-card tone-4">
-                <div><div class="stat-label">Income</div><div class="stat-value">${{ number_format($income, UGX {{ number_format($income, 0) }}) }}</div></div>
+                <div class="stat-label">Income</div><div class="stat-value">UGX {{ number_format($income, 0) }}</div>
                 <div class="stat-icon">💰</div>
             </div>
         </div>
