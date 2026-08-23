@@ -116,7 +116,7 @@
 
                 <div class="col-md-6">
                     <h2 class="section-title mb-3">Get in Touch</h2>
-                    <p class="text-muted mb-3">✉️ info@citycareclinic.test — or send us a message directly:</p>
+                    <p class="text-muted mb-3">✉️ info@citycareclinic.test <br>Or<br> Send us a message directly:</p>
 
                     @if(session('contact_sent'))
                         <div class="alert alert-success">Thank you! Your message has been sent.</div>
