@@ -141,7 +141,7 @@
         </div>
     </section>
 
-    <footer class="py-4 text-center small">
+    <footer class="site-footer py-4 text-center small">
         <div class="container">
             &copy; {{ date('Y') }} CityCare Medical Centre. All rights reserved.
         </div>
