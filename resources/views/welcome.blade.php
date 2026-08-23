@@ -148,10 +148,27 @@
 
                 <div class="col-md-6">
                     <h2 class="section-title mb-3">Get in Touch</h2>
-                    <p class="text-muted mb-1">✉️ info@citycareclinic.test</p>
-                    <p class="text-muted mb-0">Have a question before booking? Reach out and our reception team will help.</p>
+                    <p class="text-muted mb-3">✉️ info@citycareclinic.test — or send us a message directly:</p>
+
+                    @if(session('contact_sent'))
+                        <div class="alert alert-success">Thank you! Your message has been sent.</div>
+                    @endif
+
+                    <form method="POST" action="{{ route('contact.send') }}">
+                        @csrf
+                        <div class="mb-2">
+                            <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="mb-2">
+                            <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="mb-2">
+                            <textarea name="message" class="form-control" rows="3" placeholder="Your message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm">Send Message</button>
+                    </form>
                 </div>
-                
+
             </div>
         </div>
     </section>
