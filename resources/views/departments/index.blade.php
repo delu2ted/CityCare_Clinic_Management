@@ -24,11 +24,14 @@
                             <td>
                                 <a href="{{ route('departments.show', $dept->id) }}" class="btn btn-sm btn-outline-secondary">View</a>
                                 <a href="{{ route('departments.edit', $dept->id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
-                                <form action="{{ route('departments.destroy', $dept->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                                </form>
+<button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteDept{{ $dept->id }}">Delete</button>
+
+<x-confirm-delete-modal
+    :id="'deleteDept' . $dept->id"
+    :action="route('departments.destroy', $dept->id)"
+    title="Delete Department?"
+    :message="'Are you sure you want to delete &quot;' . $dept->name . '&quot;? This cannot be undone.'"
+/>
                             </td>
                         </tr>
                     @endforeach
