@@ -10,7 +10,7 @@
         </div>
         <div class="col-md-4">
             <div class="stat-card tone-1">
-                <div><div class="stat-label">Pending Total</div><div class="stat-value">${{ number_format($pendingTotal, 0}}</div></div>
+                <div><div class="stat-label">Pending Total</div><div class="stat-value">UGX{{ number_format($pendingTotal, 0)}}</div></div>
                 <div class="stat-icon">💵</div>
             </div>
         </div>
