@@ -32,7 +32,7 @@
     <section class="hero text-center">
         <div class="container">
             <h1 class="display-5 fw-bold mb-3">Compassionate Care, Close to Home</h1>
-            <p class="lead mb-4">CityCare Medical Centre brings together experienced doctors, modern facilities, and a patient-first approach — so you and your family always have somewhere trusted to turn.</p>
+            <p class="lead mb-4">CityCare Medical Centre brings together experienced doctors, modern facilities, and a patient-first approach, so you and your family always have somewhere trusted to turn.</p>
             <a href="{{ route('register') }}" class="btn btn-light btn-lg px-4">Book an Appointment</a>
         </div>
     </section>
