@@ -10,10 +10,10 @@
             <tr><th>Status</th><td><span class="badge bg-secondary">{{ ucfirst(str_replace('_',' ',$appointment->status)) }}</span></td></tr>
             <tr><th>Notes</th><td>{{ $appointment->notes ?? '—' }}</td></tr>
             @if($appointment->diagnosis || $appointment->consultation_notes || $appointment->prescription)
-    <tr><th>Diagnosis</th><td>{{ $appointment->diagnosis ?? '—' }}</td></tr>
-    <tr><th>Consultation Notes</th><td>{{ $appointment->consultation_notes ?? '—' }}</td></tr>
-    <tr><th>Prescription</th><td>{{ $appointment->prescription ?? '—' }}</td></tr>
-@endif
+                <tr><th>Diagnosis</th><td>{{ $appointment->diagnosis ?? '—' }}</td></tr>
+                <tr><th>Consultation Notes</th><td>{{ $appointment->consultation_notes ?? '—' }}</td></tr>
+                <tr><th>Prescription</th><td>{{ $appointment->prescription ?? '—' }}</td></tr>
+            @endif
             <tr><th>Payment</th><td>
                 @if($appointment->payment)
                     UGX {{ number_format($appointment->payment->amount, UGX {{ number_format($income, 0) }}) }} — {{ ucfirst($appointment->payment->status) }}
