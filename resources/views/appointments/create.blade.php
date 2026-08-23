@@ -50,7 +50,7 @@
                     <label class="form-label">Preferred Time</label>
                     <input type="time" name="appointment_time" id="appointment_time" class="form-control @error('appointment_time') is-invalid @enderror" value="{{ old('appointment_time') }}" required>
                     @error('appointment_time')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
-                    <div class="form-text">Clinic hours: 9:00 AM – 5:00 PM. A 5-minute gap is kept between each doctor's appointments.</div>
+                    <div class="form-text">Clinic hours: 9:00 AM – 5:00 PM.</div>
                 </div>
 
                 <div class="col-12">
