@@ -49,7 +49,7 @@
                                         :id="'deleteDoctor' . $doc->id"
                                         :action="route('doctors.destroy', $doc)"
                                         title="Remove Doctor?"
-                                        :message="'Remove' . ($doc->user->name ?? 'this doctor') . '? This also deletes their login account. This cannot be undone.'"
+                                        :message="'Remove ' . ($doc->user->name ?? 'this doctor') . '? This also deletes their login account. This cannot be undone.'"
                                     />
                                 @endif
                             </td>
