@@ -35,10 +35,14 @@
                             <td>
                                 <a href="{{ route('patients.show', $pat) }}" class="btn btn-sm btn-outline-secondary">View</a>
                                 <a href="{{ route('patients.edit', $pat) }}" class="btn btn-sm btn-outline-primary">Edit</a>
-                                <form action="{{ route('patients.destroy', $pat) }}" method="POST" class="d-inline">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Remove this patient? This also deletes their login account.')">Delete</button>
-                                </form>
+                                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deletePatient{{ $pat->id }}">Delete</button>
+
+                                <x-confirm-delete-modal
+                                    :id="'deletePatient' . $pat->id"
+                                    :action="route('patients.destroy', $pat)"
+                                    title="Remove Patient?"
+                                    :message="'Remove ' . ($pat->user->name ?? 'this patient') . '? This also deletes their login account and medical records. This cannot be undone.'"
+                                />
                             </td>
                         </tr>
                     @endforeach
