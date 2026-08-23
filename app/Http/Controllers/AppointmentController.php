@@ -159,6 +159,8 @@ class AppointmentController extends Controller
         return view('appointments.show', compact('appointment'));
     }
 
+    
+
     public function edit(Appointment $appointment)
     {
         $patients = Patient::with('user')->get();
