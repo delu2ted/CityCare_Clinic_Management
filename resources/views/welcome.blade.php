@@ -7,41 +7,9 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>
-        .hero {
-            background:
-                linear-gradient(135deg, rgba(81,60,115,0.85) 0%, rgba(118,87,171,0.85) 55%, rgba(176,141,192,0.85) 100%),
-                url('{{ asset('images/landing-bg.jpg') }}');
-            background-size: cover;
-            background-position: center;
-            color: #fff;
-            padding: 5rem 0;
-        }
-        .site-nav {
-            background: #fff;
-            border-bottom: 1px solid #e9ecef;
-        }
-        .section-title {
-            font-weight: 700;
-            color: #495057;
-        }
-        .dept-card, .doctor-card {
-            border: 1px solid #e9ecef;
-            border-radius: .75rem;
-            padding: 1.5rem;
-            height: 100%;
-            transition: box-shadow .15s, border-color .15s;
-        }
-        .dept-card:hover, .doctor-card:hover {
-            border-color: #d172e9;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
-        footer {
-            background: #34324a;
-            color: #cfcbe0;
-        }
-    </style>
+
 </head>
+
 <body>
 
     <nav class="navbar navbar-expand-lg site-nav sticky-top py-3">
