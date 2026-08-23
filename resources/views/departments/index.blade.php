@@ -26,12 +26,12 @@
                                 <a href="{{ route('departments.edit', $dept->id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
                                 <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteDept{{ $dept->id }}">Delete</button>
 
-<x-confirm-delete-modal
-    :id="'deleteDept' . $dept->id"
-    :action="route('departments.destroy', $dept->id)"
-    title="Delete Department?"
-    :message="'Are you sure you want to delete &quot;' . $dept->name . '&quot;? This cannot be undone.'"
-/>
+                                <x-confirm-delete-modal
+                                    :id="'deleteDept' . $dept->id"
+                                    :action="route('departments.destroy', $dept->id)"
+                                    title="Delete Department?"
+                                    :message="'Are you sure you want to delete &quot;' . $dept->name . '&quot;? This cannot be undone.'"
+                                />
                             </td>
                         </tr>
                     @endforeach
