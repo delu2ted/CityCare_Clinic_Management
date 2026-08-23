@@ -7,33 +7,9 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <style>
-        body.auth-body {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .auth-bg {
-            position: fixed;
-            inset: 0;
-            background-image: url('{{ asset('images/auth-bg.jpg') }}');
-            background-size: cover;
-            background-position: center;
-            filter: blur(6px) brightness(0.6);
-            transform: scale(1.1);
-            z-index: -2;
-        }
-        .auth-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(52, 50, 74, 0.45);
-            z-index: -1;
-        }
-    </style>
+    
 </head>
+
 <body class="auth-body">
     <div class="auth-bg"></div>
     <div class="auth-overlay"></div>
