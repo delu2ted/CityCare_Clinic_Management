@@ -43,10 +43,14 @@
                             <td>
                                 <a href="{{ route('appointments.show', $appt) }}" class="btn btn-sm btn-outline-secondary">View</a>
                                 <a href="{{ route('appointments.edit', $appt) }}" class="btn btn-sm btn-outline-primary">Edit</a>
-                                <form action="{{ route('appointments.destroy', $appt) }}" method="POST" class="d-inline">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Cancel and delete this appointment?')">Delete</button>
-                                </form>
+                                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteAppt{{ $appt->id }}">Delete</button>
+
+                                <x-confirm-delete-modal
+                                    :id="'deleteAppt' . $appt->id"
+                                    :action="route('appointments.destroy', $appt)"
+                                    title="Cancel Appointment?"
+                                    message="This will permanently delete this appointment record. This cannot be undone."
+                                />
                             </td>
                         </tr>
                     @endforeach
