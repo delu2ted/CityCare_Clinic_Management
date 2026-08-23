@@ -191,3 +191,70 @@ a:hover {
     border: 1px solid var(--color-cool-grey-medium);
     padding: 1.25rem;
 }
+
+/* ===== Public Homepage ===== */
+.hero {
+    background:
+        linear-gradient(135deg, rgba(81,60,115,0.85) 0%, rgba(118,87,171,0.85) 55%, rgba(176,141,192,0.85) 100%),
+        url('/images/landing-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 5rem 0;
+}
+
+.site-nav {
+    background: #fff;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.section-title {
+    font-weight: 700;
+    color: #495057;
+}
+
+.dept-card, .doctor-card {
+    border: 1px solid #e9ecef;
+    border-radius: .75rem;
+    padding: 1.5rem;
+    height: 100%;
+    transition: box-shadow .15s, border-color .15s;
+}
+
+.dept-card:hover, .doctor-card:hover {
+    border-color: #d8b4e2;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+footer.site-footer {
+    background: #34324a;
+    color: #cfcbe0;
+}
+
+/* ===== Auth Pages (Login/Register/etc.) ===== */
+body.auth-body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-bg {
+    position: fixed;
+    inset: 0;
+    background-image: url('/images/auth-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(6px) brightness(0.6);
+    transform: scale(1.1);
+    z-index: -2;
+}
+
+.auth-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(52, 50, 74, 0.45);
+    z-index: -1;
+}

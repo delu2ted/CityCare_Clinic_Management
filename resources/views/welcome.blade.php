@@ -33,7 +33,7 @@
             transition: box-shadow .15s, border-color .15s;
         }
         .dept-card:hover, .doctor-card:hover {
-            border-color: #e8aff7;
+            border-color: #d172e9;
             box-shadow: 0 4px 12px rgba(0,0,0,0.06);
         }
         footer {
