@@ -189,4 +189,3 @@ routes/web.php # grouped by role-based middleware
 
 ## Screenshots
 
-_(Add screenshots here before submission: public homepage, admin dashboard, appointment booking form, a sample PDF report, and the role-based 403 page.)_
