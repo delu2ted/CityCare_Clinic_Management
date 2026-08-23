@@ -160,12 +160,12 @@ class AppointmentController extends Controller
     }
 
     public function editConsultation(Appointment $appointment)
-{
-    abort_if(auth()->user()->role !== 'doctor', 403);
-    abort_if($appointment->doctor_id !== auth()->user()->doctor->id, 403);
+    {
+        abort_if(auth()->user()->role !== 'doctor', 403);
+        abort_if($appointment->doctor_id !== auth()->user()->doctor->id, 403);
 
-    return view('appointments.consultation', compact('appointment'));
-}
+        return view('appointments.consultation', compact('appointment'));
+    }
 
     public function updateConsultation(Request $request, Appointment $appointment)
     {
