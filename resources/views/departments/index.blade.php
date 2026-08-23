@@ -30,7 +30,7 @@
                                     :id="'deleteDept' . $dept->id"
                                     :action="route('departments.destroy', $dept->id)"
                                     title="Delete Department?"
-                                    :message="'Are you sure you want to delete '\' . $dept->name . '\'? This cannot be undone.'"
+                                    :message="'Are you sure you want to delete \'' . $dept->name . '\'? This cannot be undone.'"
                                 />
                             </td>
                         </tr>
