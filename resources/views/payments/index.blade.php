@@ -51,10 +51,14 @@
                                             <button type="submit" class="btn btn-sm btn-outline-success">Mark Paid</button>
                                         </form>
                                     @endif
-                                    <form action="{{ route('payments.destroy', $pay) }}" method="POST" class="d-inline">
-                                        @csrf @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this payment record?')">Delete</button>
-                                    </form>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deletePayment{{ $pay->id }}">Delete</button>
+
+<x-confirm-delete-modal
+    :id="'deletePayment' . $pay->id"
+    :action="route('payments.destroy', $pay)"
+    title="Delete Payment Record?"
+    message="This will permanently delete this payment record. This cannot be undone."
+/>
                                 @endif
                             </td>
                         </tr>
