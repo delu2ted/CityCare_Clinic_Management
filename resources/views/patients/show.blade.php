@@ -24,6 +24,7 @@
                             <td>{{ $appt->doctor->user->name ?? 'N/A' }}</td>
                             <td>{{ $appt->appointment_time->format('d M Y, H:i') }}</td>
                             <td><span class="badge bg-secondary">{{ ucfirst($appt->status) }}</span></td>
+                            <td>{{ $appt->diagnosis ?? '—' }}</td>
                         </tr>
                     @endforeach
                 </tbody>
