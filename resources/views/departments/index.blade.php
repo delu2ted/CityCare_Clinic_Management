@@ -24,7 +24,7 @@
                             <td>
                                 <a href="{{ route('departments.show', $dept->id) }}" class="btn btn-sm btn-outline-secondary">View</a>
                                 <a href="{{ route('departments.edit', $dept->id) }}" class="btn btn-sm btn-outline-primary">Edit</a>
-<button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteDept{{ $dept->id }}">Delete</button>
+                                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteDept{{ $dept->id }}">Delete</button>
 
 <x-confirm-delete-modal
     :id="'deleteDept' . $dept->id"
