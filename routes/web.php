@@ -91,3 +91,5 @@ Route::middleware(['auth'])->group(function () {
 
     
 });
+
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
