@@ -145,11 +145,13 @@
                     <p class="text-muted mb-1">🕗 Mon – Sat: 8:00 AM – 5:00 PM</p>
                     <p class="text-muted mb-0">☎️ +250 788 000 000</p>
                 </div>
+
                 <div class="col-md-6">
                     <h2 class="section-title mb-3">Get in Touch</h2>
                     <p class="text-muted mb-1">✉️ info@citycareclinic.test</p>
                     <p class="text-muted mb-0">Have a question before booking? Reach out and our reception team will help.</p>
                 </div>
+                
             </div>
         </div>
     </section>
