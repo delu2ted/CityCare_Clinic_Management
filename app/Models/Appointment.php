@@ -8,7 +8,8 @@ class Appointment extends Model
 {
     protected $fillable = [
         'patient_id', 'doctor_id', 'department_id', 
-        'appointment_time', 'status', 'notes'
+        'appointment_time', 'status', 'notes',
+        'diagnosis', 'consultation_notes', 'prescription',
     ];
 
     // Protected date format
