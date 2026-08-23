@@ -20,7 +20,13 @@
     </div>
 
     <div class="mt-3">
-        <a href="{{ route('appointments.edit', $appointment) }}" class="btn btn-outline-primary">Edit</a>
+        @if(auth()->user()->role === 'doctor' && $appointment->doctor_id === (auth()->user()->doctor->id ?? null))
+            <a href="{{ route('appointments.consultation.edit', $appointment) }}" class="btn btn-primary">Complete Consultation</a>
+        @endif
+        @if(in_array(auth()->user()->role, ['admin','receptionist']))
+            <a href="{{ route('appointments.edit', $appointment) }}" class="btn btn-outline-primary">Edit</a>
+        @endif
         <a href="{{ route('appointments.index') }}" class="btn btn-outline-secondary">Back to List</a>
     </div>
+    
 </x-dashboard-layout>
