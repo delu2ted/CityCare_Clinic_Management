@@ -16,7 +16,7 @@
             @endif
             <tr><th>Payment</th><td>
                 @if($appointment->payment)
-                    UGX {{ number_format($appointment->payment->amount, UGX {{ number_format($income, 0) }}) }} — {{ ucfirst($appointment->payment->status) }}
+                    UGX {{ number_format($appointment->payment->amount, 0) }} — {{ ucfirst($appointment->payment->status) }}
                 @else
                     <a href="{{ route('payments.create') }}?appointment_id={{ $appointment->id }}">Record payment</a>
                 @endif
