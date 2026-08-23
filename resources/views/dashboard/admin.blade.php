@@ -1,5 +1,5 @@
 <x-dashboard-layout>
-    <h2 class="h4 mb-4">Clinic Dashboard</h2>
+    <h2 class="h4 mb-4">Admin Dashboard</h2>
 
     <div class="row g-3 mb-4">
         <div class="col-md-3">
