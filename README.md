@@ -57,28 +57,29 @@ DB_USERNAME=root
 DB_PASSWORD=
 
 
-Create an empty `citycare_db` database (e.g. via phpMyAdmin) before continuing — Laravel does not create the database itself.
 
-### 5. Run migrations and seed test accounts
+Create an empty database called `citycare_db` (e.g. in phpMyAdmin) — Laravel won't create it for you.
+
+### 4. Build the database
 ```bash
 php artisan migrate:fresh --seed
 ```
 
-### 6. Build frontend assets
+### 5. Build the frontend
 ```bash
 npm run build
 ```
 
-### 7. Start the server
+### 6. Run the app
 ```bash
 php artisan serve
 ```
 
-Visit **http://127.0.0.1:8000**
+Open **http://127.0.0.1:8000**
 
 ---
 
-## Seeded Test Accounts
+## Test Accounts
 
 | Role | Email | Password |
 |---|---|---|
@@ -88,106 +89,68 @@ Visit **http://127.0.0.1:8000**
 | Cashier | cashier@citycare.com | password |
 | Patient | patient@citycare.com | password |
 
-New patients can also self-register via the public homepage's **"Book an Appointment"** button.
+New patients can also register themselves from the homepage.
 
 ---
 
-## User Roles & Access Control
+## Who Can Do What
 
-Role-based access is enforced at the route level via custom middleware (`app/Http/Middleware/EnsureUserHasRole.php`), not just hidden UI elements — visiting a restricted URL directly returns a 403.
-
-| Role | Access |
+| Role | Can access |
 |---|---|
-| **Administrator** | Full access: departments, doctors, patients, appointments, payments, reports |
-| **Receptionist** | Books/updates/cancels appointments, registers patients, views doctors (read-only) |
-| **Doctor** | Views own schedule, patient details for their appointments, doctor-schedule reports |
-| **Cashier** | Records and manages payments, views payment reports |
-| **Patient** | Views own profile, upcoming appointments, visit history, and payment status; can self-book appointments |
+| Admin | Everything — departments, doctors, patients, appointments, payments, reports |
+| Receptionist | Book/edit/cancel appointments, register patients, view doctors |
+| Doctor | Own schedule, own patients' info, doctor-schedule reports |
+| Cashier | Payments, payment reports |
+| Patient | Own profile, own appointments, own payment status, self-booking |
+
+Access is enforced with a custom `role` middleware — visiting a page you're not allowed to see returns a 403, not just a hidden menu link.
 
 ---
 
-## Major Features
+## Main Features
 
-### 1. Public Homepage
-Unauthenticated visitors see the clinic's mission, departments, doctors, location, and a contact form — before being asked to register or log in. "Book an Appointment" routes new visitors to registration first.
+**Public homepage** — visitors see the clinic's mission, departments, and doctors before logging in, with a contact form and a "Book Appointment" button that leads to registration.
 
-### 2. Authentication & Authorization
-- Login, registration (with phone number, auto-linked to a `Patient` record), password reset.
-- Custom `role` middleware restricting routes per role (Part C(a)(ii)).
+**Smart appointment booking** — pick a department; picking a doctor is optional. If you skip it, the system assigns whichever doctor in that department is least busy that day. A 5-minute gap is always kept between a doctor's appointments so bookings never overlap.
 
-### 3. Appointment Booking with Smart Assignment
-- Patients/receptionists select a **department** first; choosing a specific doctor is optional.
-- If no doctor is selected, the system automatically assigns the **least busy available doctor** in that department for the requested time.
-- A **5-minute buffer** is enforced between any doctor's appointments to prevent unrealistic back-to-back bookings.
-- Double-booking is prevented at the application level in `AppointmentController::store()`/`update()`.
+**Full CRUD everywhere** — Departments, Doctors, Patients, Appointments, and Payments all support create, view, edit, and delete, each with form validation and a proper confirmation modal before deleting.
 
-### 4. CRUD for All Core Entities
-Departments, Doctors, Patients, Appointments, and Payments all have full Create/Read/Update/Delete functionality with form validation, list + detail views, and **Bootstrap modal confirmation** on delete (via the reusable `<x-confirm-delete-modal>` component).
+**Search, filters, pagination** — on the Appointments, Doctors, Patients, and Payments lists.
 
-### 5. Search, Filtering & Pagination
-Appointments, Doctors, Patients, and Payments list pages support keyword search, status/department filters, and paginated results (10 per page).
+**Live AJAX features:**
+- Available time slots load dynamically based on doctor + date
+- Patient list has instant search-as-you-type
+- Doctor availability is checked in real time when booking
 
-### 6. AJAX Features
-- **Dynamic appointment slot loading** — the doctor dropdown filters live by selected department (`resources/js/app.js`).
-- **Doctor availability check** — `GET /api/doctors/{doctor}/available-slots` returns open time slots for a given date.
-- **Instant patient search** — `GET /api/patients/search` powers a live-typing search box on the Patients list.
+**Payments** — created automatically when an appointment is booked (starts as "pending"), tracked in UGX, managed by Cashiers.
 
-### 7. Payments
-Payments are created automatically (as `pending`) when an appointment is booked, and can be tracked/updated by Cashiers or Admin. Amounts are recorded in **UGX**.
+**Reports** — at `/reports`, generate Appointments, Doctor Schedule, Payments, or Patient Visit reports, viewable on-screen or downloadable as PDF, Excel, or CSV.
 
-### 8. Reporting (PDF / Excel / CSV)
-Available at `/reports` to Admin, Cashier, Receptionist, and Doctor roles:
-- **Appointments Report** — filterable by date range, department, status.
-- **Doctor Schedule Report** — a single doctor's appointments for a chosen date.
-- **Payments Report** — filterable by date range and status, with a total collected summary.
-- **Patient Visit Report** — full visit + payment history for one patient.
-
-Each report can be viewed on-screen or downloaded as **PDF**, **Excel (.xlsx)**, or **CSV**.
-
-### 9. Reusable Blade Components
-- `<x-alert type="success">` — dismissible, auto-fades after 3 seconds.
-- `<x-confirm-delete-modal>` — reusable delete-confirmation modal used across all 5 modules.
-- `<x-dashboard-layout>` — shared authenticated layout with role-aware sidebar navigation.
-- `<x-guest-layout>` — shared layout for login/register/password pages.
-
-### 10. Responsive Design
-Built entirely with Bootstrap 5's grid and components; the sidebar dashboard and public homepage both adapt to mobile and desktop viewports.
-
----
-
-## Database Design
-
-Core tables: `users` (with `role` enum), `patients`, `doctors`, `departments`, `appointments`, `payments`, all linked via foreign keys with appropriate `onDelete` behavior. `doctors` and `patients` each `belongsTo` a `User` (1:1 for login), while `appointments` connects `patients`, `doctors`, and `departments` (many-to-one each), and `payments` `belongsTo` both `appointments` and `patients`.
-
-See `database/migrations/` for full schema definitions.
-
----
-
-## Project Structure Highlights
-app/
-Http/Controllers/ # RESTful controllers (one per entity + Dashboard, Report, Contact)
-Http/Middleware/ # EnsureUserHasRole (custom role-based access)
-Models/ # Eloquent models with relationships
-Exports/ # Excel/CSV export classes (maatwebsite/excel)
-resources/
-views/
-layouts/ # dashboard.blade.php, guest.blade.php (shared layouts)
-components/ # alert.blade.php, confirm-delete-modal.blade.php
-reports/ # on-screen + PDF report templates
-[module]/ # index/create/edit/show per entity
-css/citystyles.css # custom theme (cool grey + lilac)
-js/app.js # AJAX logic (slot loading, instant search)
-routes/web.php # grouped by role-based middleware
-
----
-
-## Known Limitations / Notes for Reviewers
-
-- Payment methods beyond "Cash" (Mobile Money, Card, Insurance) collect placeholder fields on the booking form for UI completeness but do not process real transactions — out of scope for this exam project.
-- The public contact form logs submissions (`storage/logs/laravel.log`) rather than sending real email, since no SMTP provider is configured in this environment.
-- No-show status is set manually by Receptionist/Admin after a missed appointment time, rather than automated — this preserves human judgment over whether a patient genuinely didn't attend.
+**Reusable components** — a shared alert banner, delete-confirmation modal, and dashboard/guest layouts used consistently across the app.
 
 ---
 
 ## Screenshots
 
+**Public Homepage**
+![Homepage](docs/screenshots/homepage.png)
+
+**Admin Dashboard**
+![Admin Dashboard](docs/screenshots/admin-dashboard.png)
+
+**Booking an Appointment**
+![Book Appointment](docs/screenshots/book-appointment.png)
+
+**PDF Report Export**
+![PDF Report](docs/screenshots/report-pdf.png)
+
+**Delete Confirmation**
+![Delete Modal](docs/screenshots/delete-modal.png)
+
+---
+
+## Notes
+
+- Card/Mobile Money/Insurance payment fields on the booking form are placeholders for UI completeness — no real payment processing happens.
+- The contact form logs messages to `storage/logs/laravel.log` instead of sending real email, since no SMTP is configured.
+- Marking a "no-show" is a manual action by Receptionist/Admin, not automatic — a missed appointment could mean many things, so a person decides.
