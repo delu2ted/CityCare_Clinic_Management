@@ -159,7 +159,31 @@ class AppointmentController extends Controller
         return view('appointments.show', compact('appointment'));
     }
 
-    
+    public function editConsultation(Appointment $appointment)
+{
+    abort_if(auth()->user()->role !== 'doctor', 403);
+    abort_if($appointment->doctor_id !== auth()->user()->doctor->id, 403);
+
+    return view('appointments.consultation', compact('appointment'));
+}
+
+    public function updateConsultation(Request $request, Appointment $appointment)
+    {
+        abort_if(auth()->user()->role !== 'doctor', 403);
+        abort_if($appointment->doctor_id !== auth()->user()->doctor->id, 403);
+
+        $validated = $request->validate([
+            'diagnosis' => 'nullable|string',
+            'consultation_notes' => 'nullable|string',
+            'prescription' => 'nullable|string',
+            'status' => 'required|in:scheduled,completed,cancelled,no_show',
+        ]);
+
+        $appointment->update($validated);
+
+        return redirect()->route('appointments.show', $appointment)
+            ->with('success', 'Consultation notes saved.');
+    }
 
     public function edit(Appointment $appointment)
     {
